@@ -7,8 +7,8 @@
 /* https://github.com/hyrious/github-markdown-css
 /* https://cdn.jsdelivr.net/gh/hyrious/github-markdown-css/github-markdown.css */
 
-body {
-  background-color: #e6e6e6;
+html {
+  /* background-color: #e6e6e6; */
 }
 
 img {
@@ -66,6 +66,7 @@ img {
 @layer base {
   h1 {
     @apply text-3xl;
+    @apply font-serif;
   }
   h2 {
     @apply text-2xl;

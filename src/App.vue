@@ -2,7 +2,14 @@
   <div class="mx-auto w-screen">
     <!-- <div id="nav"></div> -->
     <router-view class="mx-auto container shadow-xl p-16 bg-white" />
-    <div class="mx-auto container h-12">markdn.io | Copyright 2021</div>
+    <div class="mx-auto container h-12">
+      <div class="mt-4 w-auto">
+        <a href="https://github.com/gtalarico/markdown.is">
+          <img src="@/assets/social-github.svg" alt="" class="src" />
+          gtalarico/markdown.is
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 

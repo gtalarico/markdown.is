@@ -5,16 +5,12 @@
       <span class=""></span>
       markdown.is
     </h1>
-    <br />
-    <p>
+
+    <p class="mt-12">
       <a href="/gh/gtalarico">
-        markdown.is/gh/gtalarico
+        <code>markdown.is/gh/gtalarico</code>
       </a>
     </p>
-    <br />
-    <code>
-      markdwn.io/gh/{github-username}
-    </code>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
 
 export default {
   name: 'App',
-  props: ['username'],
+  props: ['username', 'reponame'],
   // components: { Loader },
   data() {
     return {
@@ -17,10 +17,24 @@ export default {
     }
   },
   async created() {
-    const user = 'gtalarico'
-    const url = `https://raw.githubusercontent.com/${user}/${user}/main/README.md`
-    const response = await fetch(url)
-    this.readme = this.$md.render(this.$sanitize(await response.text()))
+    const [username, reponame] = [this.username, this.reponame]
+    const path = reponame ? `${username}/${reponame}` : `${username}/${username}`
+    const mdUrl = `https://raw.githubusercontent.com/${path}/master/README.md`
+    const cssUrl = `https://raw.githubusercontent.com/${path}/master/readme.css`
+
+    const [mdResult, cssResult] = await Promise.allSettled([fetch(mdUrl), fetch(cssUrl)])
+    const md = mdResult.value.status === 200 ? await mdResult.value.text() : null
+    const css = cssResult.value.status === 200 ? await cssResult.value.text() : null
+
+    if (md) {
+      this.readme = this.$md.render(this.$sanitize(md))
+
+      if (css) {
+        const style = document.createElement('style')
+        style.textContent = css
+        document.head.append(style)
+      }
+    }
   },
 }
 </script>

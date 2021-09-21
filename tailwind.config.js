@@ -25,7 +25,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['Roboto', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+      serif: ['Roboto Slab', 'serif'],
     },
     extend: {
       spacing: {

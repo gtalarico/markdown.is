@@ -10,6 +10,7 @@ const routes = [
   },
   {
     path: '/gh/:username',
+    alias: '/gh/:username/:reponame',
     name: 'Github Profile',
     props: true,
     // route level code-splitting
