@@ -1,15 +1,17 @@
 <template>
   <div class="home">
-    <h1 class="text-lg">
-      markdwn.io
+    <h1>
+      #
+      <span class=""></span>
+      markdown.is
     </h1>
-    <br>
+    <br />
     <p>
-      <a href="/gh/gtalarico" >
+      <a href="/gh/gtalarico">
         markdown.is/gh/gtalarico
       </a>
     </p>
-    <br>
+    <br />
     <code>
       markdwn.io/gh/{github-username}
     </code>
@@ -17,11 +19,8 @@
 </template>
 
 <script>
-
 export default {
   name: 'Home',
-  components: {
-
-  }
+  components: {},
 }
 </script>

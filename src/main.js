@@ -5,8 +5,8 @@ import router from './router'
 import DOMPurify from 'dompurify'
 import MarkdownIt from 'markdown-it'
 
-import 'github-markdown-css/github-markdown.css';
-import './styles/app.css';
+import 'github-markdown-css/github-markdown.css'
+import './styles/app.css'
 
 const app = createApp(App)
 app.config.globalProperties.$sanitize = DOMPurify.sanitize
