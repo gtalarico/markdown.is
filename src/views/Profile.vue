@@ -16,11 +16,16 @@ export default {
       readme: null,
     }
   },
+  mounted() {
+    console.log(this.$route.params)
+  },
   async created() {
     const [username, reponame] = [this.username, this.reponame]
     const path = reponame ? `${username}/${reponame}` : `${username}/${username}`
-    const mdUrl = `https://raw.githubusercontent.com/${path}/master/README.md`
-    const cssUrl = `https://raw.githubusercontent.com/${path}/master/readme.css`
+    const branch = this.$route.query.branch || 'main'
+    // debugger
+    const mdUrl = `https://raw.githubusercontent.com/${path}/${branch}/README.md`
+    const cssUrl = `https://raw.githubusercontent.com/${path}/${branch}/readme.css`
 
     const [mdResult, cssResult] = await Promise.allSettled([fetch(mdUrl), fetch(cssUrl)])
     const md = mdResult.value.status === 200 ? await mdResult.value.text() : null

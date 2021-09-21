@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-auto w-screen">
+  <div class="mx-auto w-screen p-4">
     <!-- <div id="nav"></div> -->
-    <router-view class="mx-auto container shadow-xl p-16 bg-white" />
+    <router-view class="mx-auto container shadow-xl p-16 mt-16" style="background-color: white" />
     <div class="mx-auto container h-12">
       <div class="mt-4 w-auto">
         <a href="https://github.com/gtalarico/markdown.is">

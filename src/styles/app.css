@@ -8,59 +8,7 @@
 /* https://cdn.jsdelivr.net/gh/hyrious/github-markdown-css/github-markdown.css */
 
 html {
-  /* background-color: #e6e6e6; */
-}
-
-img {
-  display: inline;
-}
-
-#wrapper {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  justify-items: center;
-  flex-direction: column;
-
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #333;
-
-}
-.container-view {
-  background-color: #fff;
-  height: 100%;
-  padding: 4rem 4rem;
-  box-shadow: 0 0 30px 1px rgba(0,0,0,0.2);
-  /* border: 1px solid #aaa; */
-}
-
-#nav {
-  height: 60px;
-  display: flex;
-  justify-content: right;
-}
-
-#footer {
-  font-size: .85rem;
-  text-align: center;
-  padding: 1rem;
-}
-
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 45px;
-}
-
-@media (max-width: 767px) {
-  .markdown-body {
-    padding: 15px;
-  }
+  background-color: #f6f6f6;
 }
 
 @layer base {
@@ -73,5 +21,23 @@ img {
   }
   h3 {
     @apply text-xl;
+  }
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  padding: 45px;
+}
+
+.markdown-body img {
+  display: inline;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
   }
 }

@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+// const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: [
@@ -14,15 +14,15 @@ module.exports = {
       lg: '976px',
       // xl: '1440px',
     },
-    colors: {
-      gray: colors.coolGray,
-      blue: colors.lightBlue,
-      red: colors.rose,
-      pink: colors.fuchsia,
-      primary: '#3490dc',
-      secondary: '#ffed4a',
-      danger: '#e3342f',
-    },
+    // colors: {
+    //   gray: colors.coolGray,
+    //   blue: colors.lightBlue,
+    //   red: colors.rose,
+    //   pink: colors.fuchsia,
+    //   primary: '#3490dc',
+    //   secondary: '#ffed4a',
+    //   danger: '#e3342f',
+    // },
     fontFamily: {
       sans: ['Roboto', 'sans-serif'],
       serif: ['Roboto Slab', 'serif'],
