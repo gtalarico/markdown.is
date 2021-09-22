@@ -4,6 +4,14 @@ import Docs from '../views/Docs.vue'
 import Profile from '../views/Profile.vue'
 import config from "../config.json";
 
+const getUserNameAndRepos = (path) => {
+  // "/gh/username/repo" -> { username: username, repo: repo }
+  const parts = path.split('/')
+  return {
+    username: parts[2],
+    reponame: parts[3]
+  }
+}
 
 const routes = [
   {
@@ -18,13 +26,24 @@ const routes = [
   },
   {
     path: '/gh/:username',
-    alias: '/gh/:username/:reponame',
     name: 'Github Profile',
     props: true,
     component: Profile
   },
+  {
+    path: '/gh/:username/:reponame',
+    name: 'Github Repo',
+    props: true,
+    component: Profile
+  },
   ...Object.entries(config.aliases).map(
-    ([key, value]) => ({ path: key, redirect: value })
+    ([key, value]) => ({
+      path: key,
+      name: 'Github Alias',
+      props: { ...getUserNameAndRepos(value) },
+      component: Profile
+    })
+
   )
 ]
 

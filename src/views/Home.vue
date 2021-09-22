@@ -43,7 +43,7 @@
         <a
           :href="`gh/${username}/${reponame}`"
           class="transition-opacity text-sm"
-          :class="{ 'mt-0 opacity-0': !username }"
+          :class="{ 'mt-0 opacity-0 pointer-events-none': !username }"
         >
           <img src="@/assets/external-link.svg" class="inline h-4" />
           <span class="ml-2">View</span>
