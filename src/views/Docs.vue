@@ -9,7 +9,7 @@
       <strong>markdown.is</strong>
       is a simple website that fetches markdown files from github and renders them as html. The
       initial motivation for this was to be able to view a github profile README.md as a website,
-      without taking the user to Github. e.g.
+      without taking the visitor to Github. e.g.
       <a href="/gh/gtalarico">markdown.is/gh/gtalarico</a>
       renders
       <a href="https://github.com/gtalarico/gtalarico/README.md">
