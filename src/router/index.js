@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import Docs from '../views/Docs.vue'
+import Profile from '../views/Profile.vue'
+import config from "../config.json";
+
 
 const routes = [
   {
@@ -8,12 +12,20 @@ const routes = [
     component: Home,
   },
   {
+    path: '/docs',
+    name: 'Docs',
+    component: Docs,
+  },
+  {
     path: '/gh/:username',
     alias: '/gh/:username/:reponame',
     name: 'Github Profile',
     props: true,
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    component: Profile
   },
+  ...Object.entries(config.aliases).map(
+    ([key, value]) => ({ path: key, redirect: value })
+  )
 ]
 
 const router = createRouter({

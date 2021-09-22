@@ -1,19 +1,20 @@
 <template>
   <div class="markdown-body">
+    <ProgressBar :isLoading="isLoading"></ProgressBar>
     <div v-if="readme" v-html="readme"></div>
   </div>
 </template>
 
 <script>
-// import Loader from '../components/Loader.vue'
-
+import ProgressBar from '../components/ProgressBar.vue'
 export default {
   name: 'App',
   props: ['username', 'reponame'],
-  // components: { Loader },
+  components: { ProgressBar },
   data() {
     return {
       readme: null,
+      isLoading: true,
     }
   },
   mounted() {
@@ -23,8 +24,9 @@ export default {
     const [username, reponame] = [this.username, this.reponame]
     const path = reponame ? `${username}/${reponame}` : `${username}/${username}`
     const branch = this.$route.query.branch || 'main'
-    // debugger
-    const mdUrl = `https://raw.githubusercontent.com/${path}/${branch}/README.md`
+    const filename = this.$route.query.filename || 'README.md'
+
+    const mdUrl = `https://raw.githubusercontent.com/${path}/${branch}/${filename}`
     const cssUrl = `https://raw.githubusercontent.com/${path}/${branch}/readme.css`
 
     const [mdResult, cssResult] = await Promise.allSettled([fetch(mdUrl), fetch(cssUrl)])
@@ -40,6 +42,7 @@ export default {
         document.head.append(style)
       }
     }
+    this.isLoading = false
   },
 }
 </script>
