@@ -14,7 +14,7 @@ html {
 @layer base {
   h1 {
     @apply text-3xl;
-    @apply mb-4;
+    @apply mb-5;
 
   }
   h2 {
@@ -23,8 +23,9 @@ html {
   }
 
   h3 {
-    @apply text-xl;
-    @apply mb-4;
+    @apply text-lg;
+    @apply mb-3;
+    @apply font-medium;
   }
   p {
     @apply mb-4;
