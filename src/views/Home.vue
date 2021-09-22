@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-10">
       <router-link :to="{ name: 'Docs' }" tag="a">Docs</router-link>
     </div>
   </div>
@@ -64,7 +64,7 @@ export default {
   components: {},
   data() {
     return {
-      username: 'gtalarico',
+      username: '',
       reponame: '',
       isEditingUsername: false,
     }
@@ -72,7 +72,10 @@ export default {
   computed: {
     pagePath() {
       return (
-        `github.com/${this.username}` + (this.reponame ? `/${this.reponame}` : '') + `/README.md`
+        `github.com/${this.username}` +
+        (this.reponame ? `/${this.reponame}` : `/${this.username}`) +
+        `/main` +
+        `/README.md`
       )
     },
     usernameWidth() {

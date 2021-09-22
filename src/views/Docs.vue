@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <h1 class="font-serif"># markdown.is</h1>
+    <h1 class="font-serif mb-12">
+      <a href="/" class="no-underline"># markdown.is</a>
+    </h1>
 
-    <h3 class="mt-10">what is this</h3>
+    <h3>what is this</h3>
     <p>
       <strong>markdown.is</strong>
       is a simple website that fetches markdown files from github and renders them as html. The
@@ -40,7 +42,7 @@
       <code>markdown.is/gh/gtalarico?branch=master</code>
     </p>
 
-    <h3>custom urls</h3>
+    <h3 class="mt-10">custom urls</h3>
     <h4>alias</h4>
     <p>
       You can create custom alias by submitting a PR and adding your alias to
@@ -51,10 +53,22 @@
       to the config file will allow the profile page of username gtalarico to be available at
       markdown.is/gui
     </p>
-    <h3>url redirects</h3>
+    <h3 class="mt-10">url redirects</h3>
     <p>
       You can configure your own domain to redirect to your markdown.is page. For example,
       https://gui.is redirects to https://markdown.is/gui
+    </p>
+
+    <h3 class="mt-10">styling (beta)</h3>
+    <p>
+      In addition to rendering your markdown, you can also apply a custom style. You can do so by
+      adding a css file
+      <code>README.css</code>
+      next to your readme.
+    </p>
+    <p>
+      You can provide a different filename through the query param
+      <code>?cssFilename=style.css</code>
     </p>
   </div>
 </template>

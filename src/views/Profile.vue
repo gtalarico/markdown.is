@@ -25,9 +25,10 @@ export default {
     const path = reponame ? `${username}/${reponame}` : `${username}/${username}`
     const branch = this.$route.query.branch || 'main'
     const filename = this.$route.query.filename || 'README.md'
+    const cssFilename = this.$route.query.cssFilename || 'README.css'
 
     const mdUrl = `https://raw.githubusercontent.com/${path}/${branch}/${filename}`
-    const cssUrl = `https://raw.githubusercontent.com/${path}/${branch}/readme.css`
+    const cssUrl = `https://raw.githubusercontent.com/${path}/${branch}/${cssFilename}`
 
     const [mdResult, cssResult] = await Promise.allSettled([fetch(mdUrl), fetch(cssUrl)])
     const md = mdResult.value.status === 200 ? await mdResult.value.text() : null

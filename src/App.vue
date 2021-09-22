@@ -6,10 +6,10 @@
       <a class="absolute left-0" href="https://github.com/gtalarico/markdown.is">
         <span class="leading-12">
           <img class="inline h-4 align-middle" src="@/assets/social-github.svg" alt="Github Icon" />
-          <span class="align-middle ml-1">gtalarico/markdown.is</span>
+          <span class="align-middle ml-1 no-underline">gtalarico/markdown.is</span>
         </span>
       </a>
-      <a class="font-serif absolute right-0" href="/"># markdown.is</a>
+      <a class="font-serif absolute right-0 no-underline" href="/"># markdown.is</a>
     </div>
   </div>
 </template>
