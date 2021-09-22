@@ -4,12 +4,23 @@ import Docs from '../views/Docs.vue'
 import Profile from '../views/Profile.vue'
 import config from "../config.json";
 
-const getUserNameAndRepos = (path) => {
-  // "/gh/username/repo" -> { username: username, repo: repo }
-  const parts = path.split('/')
+const getPropsFromPath = (path) => {
+  // "/gh/username/repo" -> { username: username, repo: repo, etc }
+  // TODO: Refactor
+  const paramsParts = path.split('?')
+  let params = null
+  if (paramsParts) {
+    params = new URLSearchParams(`?${paramsParts[1]}`)
+    path = paramsParts[0]
+  }
+  const pathParts = path.split('/')
+
   return {
-    username: parts[2],
-    reponame: parts[3]
+    username: pathParts[2],
+    reponame: pathParts[3],
+    branch: params.get('branch'),
+    filename: params.get('filename'),
+
   }
 }
 
@@ -39,13 +50,14 @@ const routes = [
   ...Object.entries(config.aliases).map(
     ([key, value]) => ({
       path: key,
-      name: 'Github Alias',
-      props: { ...getUserNameAndRepos(value) },
+      name: `alias-${key}`,
+      props: { ...getPropsFromPath(value) },
       component: Profile
     })
 
   )
 ]
+console.log(routes)
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

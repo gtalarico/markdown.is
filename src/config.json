@@ -1,5 +1,6 @@
 {
     "aliases": {
-        "/gui": "/gh/gtalarico/gtalarico"
+        "/gui": "/gh/gtalarico/gtalarico",
+        "/pyrevit": "/gh/eirannejad/pyRevit?branch=master"
     }
 }

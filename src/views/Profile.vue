@@ -15,7 +15,7 @@
 import ProgressBar from '../components/ProgressBar.vue'
 export default {
   name: 'App',
-  props: ['username', 'reponame'],
+  props: ['username', 'reponame', 'branch', 'filename', 'cssFilename'],
   components: { ProgressBar },
   data() {
     return {
@@ -27,6 +27,8 @@ export default {
   mounted() {
     console.log(this.username)
     console.log(this.reponame)
+    console.log(this.branch)
+    console.log(this.filename)
   },
   async created() {
     let [username, reponame] = [this.username, this.reponame]
@@ -34,9 +36,9 @@ export default {
       reponame = username
     }
     const repoPath = `${username}/${reponame}`
-    const branch = this.$route.query.branch || 'main'
-    const filename = this.$route.query.filename || 'README.md'
-    const cssFilename = this.$route.query.cssFilename || 'README.css'
+    const branch = this.branch || 'main'
+    const filename = this.filename || 'README.md'
+    const cssFilename = this.cssFilename || 'README.css'
 
     const mdUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`
     const cssUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`
