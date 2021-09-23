@@ -36,9 +36,9 @@ export default {
       reponame = username
     }
     const repoPath = `${username}/${reponame}`
-    const branch = this.branch || 'main'
-    const filename = this.filename || 'README.md'
-    const cssFilename = this.cssFilename || 'README.css'
+    const branch = this.$route.query.branch || 'main'
+    const filename = this.$route.query.filename || 'README.md'
+    const cssFilename = this.$route.query.cssFilename || 'README.css'
 
     const mdUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`
     const cssUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`

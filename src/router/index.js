@@ -4,25 +4,6 @@ import Docs from '../views/Docs.vue'
 import Profile from '../views/Profile.vue'
 import config from "../config.json";
 
-const getPropsFromPath = (path) => {
-  // "/gh/username/repo" -> { username: username, repo: repo, etc }
-  // TODO: Refactor
-  const paramsParts = path.split('?')
-  let params = null
-  if (paramsParts) {
-    params = new URLSearchParams(`?${paramsParts[1]}`)
-    path = paramsParts[0]
-  }
-  const pathParts = path.split('/')
-
-  return {
-    username: pathParts[2],
-    reponame: pathParts[3],
-    branch: params.get('branch'),
-    filename: params.get('filename'),
-
-  }
-}
 
 const routes = [
   {
@@ -47,11 +28,11 @@ const routes = [
     props: true,
     component: Profile
   },
-  ...Object.entries(config.aliases).map(
-    ([key, value]) => ({
+  ...Object.entries(config.ghAliases).map(
+    ([key, values]) => ({
       path: key,
       name: `alias-${key}`,
-      props: { ...getPropsFromPath(value) },
+      props: { ...values },
       component: Profile
     })
 

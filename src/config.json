@@ -1,6 +1,14 @@
 {
-    "aliases": {
-        "/gui": "/gh/gtalarico/gtalarico",
-        "/pyrevit": "/gh/eirannejad/pyRevit?branch=master"
+    "ghAliases": {
+        "/gui": {
+            "username": "gtalarico",
+            "reponame": "gtalarico",
+            "branch": "main"
+        },
+        "/pyrevit": {
+            "username": "eirannejad",
+            "reponame": "pyRevit",
+            "branch": "master"
+        }
     }
 }
