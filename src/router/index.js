@@ -18,13 +18,13 @@ const routes = [
   },
   {
     path: '/gh/:username',
-    name: 'Github Profile',
+    name: 'GithubProfile',
     props: true,
     component: Profile
   },
   {
     path: '/gh/:username/:reponame',
-    name: 'Github Repo',
+    name: 'GithubRepo',
     props: true,
     component: Profile
   },
