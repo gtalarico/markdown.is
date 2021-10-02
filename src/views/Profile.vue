@@ -85,6 +85,7 @@ export default {
     if (md) {
       this.readme = processMarkup(this.$md.render(this.$sanitize(md)))
       if (css) {
+        // TODO need to id and pop previous one
         const style = document.createElement('style')
         style.textContent = css
         document.head.append(style)
