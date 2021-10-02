@@ -100,9 +100,9 @@
         >
           Render
         </button>
-        <div class="mt-6 bg-gray-50 py-4 px-4 rounded">
+        <div class="mt-6 bg-gray-50 py-4 px-4 overflow-scroll rounded flex">
           <img src="@/assets/target.svg" class="inline h-6" />
-          <a :href="`https://${pagePath}`">
+          <a :href="`https://${pagePath}`" class="inline">
             <span class="ml-2 text-sm font-mono text-gray-600">{{ pagePath }}</span>
           </a>
         </div>
