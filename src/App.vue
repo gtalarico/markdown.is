@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto w-screen p-4">
     <router-view
-      class="mx-auto container shadow-xl p-6 md:p-16 mt-0 md:mt-8"
+      class="mx-auto container shadow-xl p-6 md:px-12 md:pt-8 mt-0 md:mt-8"
       style="background-color: white"
     />
 

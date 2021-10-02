@@ -1,11 +1,14 @@
 <template>
-  <div class="markdown-body">
-    <ProgressBar :isLoading="isLoading"></ProgressBar>
-    <div v-if="readme" v-html="readme"></div>
-    <div class="mt-2 text-gray-400 text-sm text-center font-light">
-      URL
-      <a :href="url">
-        {{ url }}
+  <div>
+    <div class="markdown-body">
+      <ProgressBar :isLoading="isLoading"></ProgressBar>
+      <div v-if="readme" v-html="readme"></div>
+    </div>
+    <div class="pt-6 border-t py-2 px-2 overflow-scroll rounded text-center">
+      <a :href="url" class="inline">
+        <span class="ml-2 text-sm font-mono text-gray-600">
+          {{ url }}
+        </span>
       </a>
     </div>
   </div>
@@ -24,31 +27,47 @@ export default {
       url: null,
     }
   },
-  mounted() {
-    console.log(this.username)
-    console.log(this.reponame)
-    console.log(this.branch)
-    console.log(this.filename)
-  },
+  mounted() {},
   async created() {
     let [username, reponame] = [this.username, this.reponame]
     if (!reponame) {
       reponame = username
     }
     const repoPath = `${username}/${reponame}`
-    const branch = this.$route.query.branch || 'main'
+    const branches = this.$route.query.branch ? [this.$route.query.branch] : ['main', 'master']
     const filename = this.$route.query.filename || 'README.md'
     const cssFilename = this.$route.query.cssFilename || 'README.css'
 
-    const mdUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`
-    const cssUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`
+    // for (let branch of this.$route.query.branch) {
+    const urls = branches.map((branch) => ({
+      branchName: branch,
+      mdURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`,
+      cssURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`,
+    }))
 
-    const [mdResult, cssResult] = await Promise.allSettled([fetch(mdUrl), fetch(cssUrl)])
-    const md = mdResult.value.status === 200 ? await mdResult.value.text() : 'not found'
-    const css = cssResult.value.status === 200 ? await cssResult.value.text() : null
+    let md, branch
+    let css = null
+    const results = await Promise.allSettled(urls.map((o) => fetch(o.mdURL)))
+    let index = 0
+    for (let r of results) {
+      if (r.value.status == 200) {
+        md = await r.value.text()
+        branch = urls[index].branchName
+        let cssURL = urls[index].cssURL
+        try {
+          let cssResponse = await fetch(cssURL)
+          css = await cssResponse.text()
+        } catch (e) {
+          console.log(e)
+        }
+        break
+      }
+      index++
+    }
 
     this.url = `https://github.com/${repoPath}/blob/${branch}/${filename}`
 
+    // Refactor out
     const processMarkup = (htmlMarkup) => {
       const parser = new DOMParser()
       const doc = parser.parseFromString(htmlMarkup, 'text/html')
