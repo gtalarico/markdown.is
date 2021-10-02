@@ -89,6 +89,7 @@ export default {
         const style = document.createElement('style')
         style.textContent = css
         document.head.append(style)
+        console.log('Css Injected')
       }
     }
     this.isLoading = false
