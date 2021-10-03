@@ -43,6 +43,10 @@ html {
   /* max-width: 980px; */
 }
 
+.markdown-body ul {
+  list-style: initial;
+}
+
 .markdown-body img {
   display: inline;
   margin-bottom: 5px;

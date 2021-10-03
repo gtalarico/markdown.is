@@ -1,7 +1,7 @@
 <template>
   <div>
+    <ProgressBar :isLoading="isLoading"></ProgressBar>
     <div class="markdown-body">
-      <ProgressBar :isLoading="isLoading"></ProgressBar>
       <div v-if="readme" v-html="readme"></div>
     </div>
     <div class="mt-4 pt-6 border-t py-2 px-2 overflow-scroll rounded text-center">
@@ -35,15 +35,14 @@ export default {
     if (!reponame) {
       reponame = username
     }
-    const repoPath = `${username}/${reponame}`
     const branches = this.$route.query.branch ? [this.$route.query.branch] : ['main', 'master']
     const filename = this.$route.query.filename || 'README.md'
     const cssFilename = this.$route.query.cssFilename || 'README.css'
 
     const urls = branches.map((branch) => ({
       branchName: branch,
-      mdURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`,
-      cssURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`,
+      mdURL: `https://raw.githubusercontent.com/${username}/${reponame}/${branch}/${filename}`,
+      cssURL: `https://raw.githubusercontent.com/${username}/${reponame}/${branch}/${cssFilename}`,
     }))
 
     let branch = 'main'
@@ -67,14 +66,16 @@ export default {
       index++
     }
 
-    this.url = `https://github.com/${repoPath}/blob/${branch}/${filename}`
+    this.url = `https://github.com/${username}/${reponame}/blob/${branch}/${filename}`
 
     if (md) {
       const html = await renderMarkdown(md)
-      this.readme = processMarkup(html, repoPath, branch)
+      this.readme = processMarkup(html, username, reponame, branch)
       if (css) {
         // TODO need to id and pop previous one
-        const style = document.createElement('style')
+        const styleId = 'markdown-injected-css'
+        const style = document.getElementById(styleId) || document.createElement('style')
+        style.id = 'markdown-injected-css'
         style.textContent = css
         document.head.append(style)
         console.log('Css Injected')
