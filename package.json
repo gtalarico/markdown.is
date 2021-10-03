@@ -10,7 +10,11 @@
   "dependencies": {
     "@vue/eslint-config-prettier": "^6.0.0",
     "core-js": "^3.6.5",
+    "dompurify": "^2.3.3",
     "github-markdown-css": "^4.0.0",
+    "markdown-it": "^12.2.0",
+    "markdown-it-anchor": "^8.3.1",
+    "markdown-it-task-lists": "^2.1.1",
     "node-fetch": "^2.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
