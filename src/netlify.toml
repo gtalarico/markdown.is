@@ -3,10 +3,5 @@
   publish = "./dist"
   command = "yarn build"
 
-[build.environment]
-  VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
-  VUE_APP_GITHUB_CLIENT_ID="6d6767eb4dcc89d70f99"
-
-[context.staging.environment]
-  VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
-  VUE_APP_GITHUB_CLIENT_ID="4f8c467a5383b913669f"
+[functions]
+  directory = "netlify/functions"
