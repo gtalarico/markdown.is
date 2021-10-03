@@ -19,12 +19,13 @@ export const renderMarkdown = async markdown => {
 }
 
 // process html markup for rendering
-export const processMarkup = (htmlMarkup, repoPath, branch) => {
-    const context = { repoPath, branch }
+export const processMarkup = (htmlMarkup, username, reponame, branch) => {
+    const context = { username, reponame, branch }
     const parser = new DOMParser()
     const doc = parser.parseFromString(htmlMarkup, 'text/html')
     const middlewares = [
-        fixImgPaths,
+        fixRelativeImagePaths,
+        fixRelativePaths,
         addMediaPlayer
     ]
     const reducer = (prev, fn) => fn(prev, context)
@@ -52,14 +53,39 @@ const addMediaPlayer = (dom, context) => {
 }
 
 // Swaps out relative paths to full github absolute URL
-const fixImgPaths = (dom, context) => {
+const fixRelativeImagePaths = (dom, context) => {
     const newdom = dom.cloneNode(true)
     dom.querySelectorAll('img').forEach((node) => {
         let imgPath = node.attributes.src.value
         if (!imgPath.startsWith('http') & !imgPath.startsWith('//')) {
-            const newUrl = `https://raw.githubusercontent.com/${context.repoPath}/${context.branch}/${imgPath}`
+            const newUrl = `https://raw.githubusercontent.com/${context.username}/${context.reponame}/${context.branch}/${imgPath}`
             node.src = newUrl
         }
     })
     return dom
+}
+
+// Fix Relative Paths
+const fixRelativePaths = (dom, context) => {
+    const newdom = dom.cloneNode(true)
+    dom.querySelectorAll('a').forEach((node) => {
+        let href = node.attributes.href.value || ""
+        // Matches all relative targets
+        // https://stackoverflow.com/questions/10687099/how-to-test-if-a-url-string-is-absolute-or-relative
+        if (!href.match(/(?:^[a-z][a-z0-9+.-]*:|\/\/|^#)/g)) {
+            console.log(href)
+            if (href.match(/.md$/g)) {
+                // md - link to markdown.is version
+                node.href = `/gh/${context.username}/${context.reponame}/${href}`
+            } else {
+                // not md - link to github
+                node.href = `https://github.com/${context.username}/${context.reponame}/blob/${context.branch}` + (href.startsWith('/') ? href : `/${href}`)
+            }
+        }
+    })
+    return dom
+}
+
+const renderTaskCheckBox = (dom, context) => {
+
 }
