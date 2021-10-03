@@ -1,2 +1,1 @@
-https://markdown.is/api/*                           https://api.markdown.is/:splat                          200
-https://markdown.is/*                               https://markdown-is.netlify.app/                        200
+/*                               /                        200

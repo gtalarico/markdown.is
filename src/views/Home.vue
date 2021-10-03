@@ -3,7 +3,7 @@
     <h1 class="font-serif"># markdown.is</h1>
 
     <div class="mt-10 pt-0">
-      <form class="flex flex-wrap gap-3 w-full" @click="goToPath()">
+      <form class="flex flex-wrap gap-3 w-full" @submit="goToPath()">
         <label class="relative w-full flex flex-col">
           <span class="font-bold mb-3">Github Username</span>
           <input
