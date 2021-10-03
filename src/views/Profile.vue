@@ -39,7 +39,7 @@ export default {
     const filename = this.$route.query.filename || 'README.md'
     const cssFilename = this.$route.query.cssFilename || 'README.css'
 
-    const urls = branches.map((branch) => ({
+    const branchUrls = branches.map((branch) => ({
       branchName: branch,
       mdURL: `https://raw.githubusercontent.com/${username}/${reponame}/${branch}/${filename}`,
       cssURL: `https://raw.githubusercontent.com/${username}/${reponame}/${branch}/${cssFilename}`,
@@ -48,44 +48,43 @@ export default {
     let branch = 'main'
     let md
     let css = null
-    const results = await Promise.allSettled(urls.map((o) => fetch(o.mdURL)))
-    let index = 0
-    for (let r of results) {
-      if (r.value.status == 200) {
-        md = await r.value.text()
-        branch = urls[index].branchName
-        let cssURL = urls[index].cssURL
-        try {
-          let cssResponse = await fetch(cssURL)
-          css = await cssResponse.text()
-        } catch (e) {
-          console.log(e)
-        }
-        break
-      }
-      index++
-    }
 
-    this.url = `https://github.com/${username}/${reponame}/blob/${branch}/${filename}`
+    const promisses = branchUrls.map((u) => fetch(u.mdURL))
 
-    if (md) {
-      // let html = await renderMarkdownRemote(md) // Users Github API
-      let html = await renderMarkdownLocal(md)
-      this.readme = processMarkup(html, username, reponame, branch)
-      // this.readme = html
-      if (css) {
-        // TODO need to id and pop previous one
-        const styleId = 'markdown-injected-css'
-        const style = document.getElementById(styleId) || document.createElement('style')
-        style.id = 'markdown-injected-css'
-        style.textContent = css
-        document.head.append(style)
-        console.log('Css Injected')
-      }
-    } else {
-      this.readme = 'Target not found'
-    }
-    this.isLoading = false
+    Promise.allSettled(promisses).then((results) => {
+      this.isLoading = false
+    })
+
+    promisses.forEach((prom, idx) => {
+      prom
+        .then(async (resp) => {
+          if (resp.status == 200) {
+            md = await resp.text()
+            const branchOpt = branchUrls[idx]
+
+            // Render
+            this.url = `https://github.com/${username}/${reponame}/blob/${branchOpt.branchName}/${filename}`
+            // let html = await renderMarkdownRemote(md) // Users Github API
+            let html = await renderMarkdownLocal(md)
+            this.readme = processMarkup(html, username, reponame, branchOpt.branchName)
+
+            try {
+              let cssResponse = await fetch(branchOpt.cssURL)
+              css = await cssResponse.text()
+
+              const styleId = 'markdown-injected-css'
+              const style = document.getElementById(styleId) || document.createElement('style')
+              style.id = 'markdown-injected-css'
+              style.textContent = css
+              document.head.append(style)
+              console.log('Css Injected')
+            } catch (e) {
+              console.log(e)
+            }
+          }
+        })
+        .catch((e) => console.log(e))
+    })
   },
 }
 </script>

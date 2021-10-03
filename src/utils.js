@@ -86,7 +86,6 @@ const fixRelativePaths = (dom, context) => {
         // Matches all relative targets
         // https://stackoverflow.com/questions/10687099/how-to-test-if-a-url-string-is-absolute-or-relative
         if (!href.match(/(?:^[a-z][a-z0-9+.-]*:|\/\/|^#)/g)) {
-            console.log(href)
             if (href.match(/.md$/g)) {
                 // md - link to markdown.is version
                 node.href = `/gh/${context.username}/${context.reponame}/${href}`
