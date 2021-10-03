@@ -16,7 +16,7 @@
 
 <script>
 import ProgressBar from '../components/ProgressBar.vue'
-import { renderMarkdown, processMarkup } from '../utils'
+import { renderMarkdownLocal, processMarkup } from '../utils'
 
 export default {
   name: 'App',
@@ -69,8 +69,10 @@ export default {
     this.url = `https://github.com/${username}/${reponame}/blob/${branch}/${filename}`
 
     if (md) {
-      const html = await renderMarkdown(md)
+      // let html = await renderMarkdownRemote(md) // Users Github API
+      let html = await renderMarkdownLocal(md)
       this.readme = processMarkup(html, username, reponame, branch)
+      // this.readme = html
       if (css) {
         // TODO need to id and pop previous one
         const styleId = 'markdown-injected-css'

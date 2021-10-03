@@ -1,6 +1,18 @@
+import DOMPurify from 'dompurify'
+import MarkdownIt from 'markdown-it'
+import MarkdownItTasks from 'markdown-it-task-lists'
+import MarkdownItAnchor from 'markdown-it-anchor'
 
+export const renderMarkdownLocal = markdown => {
+    // DOMPurify.sanitize
+    const md = MarkdownIt()
+        .use(MarkdownItTasks)
+    // .use(MarkdownItAnchor)
 
-export const renderMarkdown = async markdown => {
+    return md.render(markdown)
+}
+
+export const renderMarkdownRemote = async markdown => {
     const response = await fetch(
         "/.netlify/functions/github-markdown",
         {
@@ -26,7 +38,8 @@ export const processMarkup = (htmlMarkup, username, reponame, branch) => {
     const middlewares = [
         fixRelativeImagePaths,
         fixRelativePaths,
-        addMediaPlayer
+        addMediaPlayer,
+        addAnchors,
     ]
     const reducer = (prev, fn) => fn(prev, context)
     const processedDoc = middlewares.reduce(reducer, doc)
@@ -86,6 +99,45 @@ const fixRelativePaths = (dom, context) => {
     return dom
 }
 
-const renderTaskCheckBox = (dom, context) => {
+const addAnchors = (dom, context) => {
+    `
+    <h3>
+        <a id="user-content-demo" class="anchor" href="#demo" aria-hidden="true">
+            <span aria-hidden="true" class="octicon octicon-link">
+            </span>
+        </a>
+        Demo
+    </h3>`
 
+    for (const h of dom.querySelectorAll('h1, h2, h3, h4, h5, h6')) {
+        const slug = h.getAttribute('id') || slugify(h.textContent)
+        h.setAttribute('id', slug)
+        const el = `
+            <a id="user-content-demo" class="anchor" href="#${slug}" aria-hidden="true">
+            <span aria-hidden="true" class="octicon octicon-link">
+            </span>
+            </a>`
+        h.insertAdjacentHTML('afterbegin', el)
+    }
+    return dom
+
+}
+
+
+const slugify = (str) => {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
+
+    // remove accents, swap ñ for n, etc
+    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    var to = "aaaaeeeeiiiioooouuuunc------";
+    for (var i = 0, l = from.length; i < l; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
+
+    return str;
 }
