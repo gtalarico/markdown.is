@@ -35,6 +35,7 @@ export default {
     if (!reponame) {
       reponame = username
     }
+    // Attempt Main first, because github usually redirects 'master' requests to main for legacy support
     const branches = this.$route.query.branch ? [this.$route.query.branch] : ['main', 'master']
     const filename = this.$route.query.filename || 'README.md'
     const cssFilename = this.$route.query.cssFilename || 'README.css'
