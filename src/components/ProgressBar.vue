@@ -1,23 +1,9 @@
 <template>
-  <!-- <progress class="progress-bar" max="100" :value="value">test</progress> -->
-  <p v-if="isLoading">Loading</p>
-  <!-- <progress class="relative pt-1">
-    <div class="overflow-hidden h-2 mb-4 text-xs flex bg-gray-300">
-      <div
-        :style="`width: ${value}%`"
-        class="
-          transition-all
-          shadow-none
-          flex flex-col
-          text-center
-          whitespace-nowrap
-          text-white
-          justify-center
-          bg-black
-        "
-      ></div>
+  <div class="py-2 transition-opacity opacity-1" :class="{ 'opacity-0': !isLoading }">
+    <div class="loader w-100 m-0 relative before:bg-gray-200">
+      <div class="loaderBar"></div>
     </div>
-  </progress> -->
+  </div>
 </template>
 
 <script>
@@ -29,21 +15,51 @@ export default {
     },
   },
   data() {
-    return {
-      value: 0,
-    }
-  },
-  created() {
-    this.value = this.isLoading ? 100 : 0
-    setInterval(() => {
-      if (this.value >= 100) {
-        this.value = 0
-      } else {
-        this.value = +this.value + 5
-      }
-    }, 100)
+    return {}
   },
 }
 </script>
 <style scoped>
+/* TODO: Tailwind? */
+.loader:before {
+  content: '';
+  background-color: #eee;
+  position: absolute;
+  width: 100%;
+  height: 6px;
+}
+.loader .loaderBar {
+  height: 6px;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  left: 0;
+  background: black;
+  width: 0;
+  animation: borealisBar 2.25s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+  10% {
+    left: 0%;
+    right: 75%;
+    width: 25%;
+  }
+  90% {
+    right: 0%;
+    left: 75%;
+    width: 25%;
+  }
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
+}
 </style>

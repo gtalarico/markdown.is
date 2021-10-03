@@ -1,7 +1,7 @@
 <template>
   <div>
+    <ProgressBar :isLoading="isLoading"></ProgressBar>
     <div class="markdown-body">
-      <ProgressBar :isLoading="isLoading"></ProgressBar>
       <div v-if="readme" v-html="readme"></div>
     </div>
     <div class="mt-4 pt-6 border-t py-2 px-2 overflow-scroll rounded text-center">
