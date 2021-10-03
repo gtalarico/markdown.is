@@ -4,7 +4,7 @@
       <ProgressBar :isLoading="isLoading"></ProgressBar>
       <div v-if="readme" v-html="readme"></div>
     </div>
-    <div class="pt-6 border-t py-2 px-2 overflow-scroll rounded text-center">
+    <div class="mt-4 pt-6 border-t py-2 px-2 overflow-scroll rounded text-center">
       <a :href="url" class="inline">
         <span class="ml-2 text-sm font-mono text-gray-600">
           {{ url }}
@@ -16,6 +16,8 @@
 
 <script>
 import ProgressBar from '../components/ProgressBar.vue'
+import { renderMarkdown, processMarkup } from '../utils'
+
 export default {
   name: 'App',
   props: ['username', 'reponame', 'branch', 'filename', 'cssFilename'],
@@ -38,14 +40,14 @@ export default {
     const filename = this.$route.query.filename || 'README.md'
     const cssFilename = this.$route.query.cssFilename || 'README.css'
 
-    // for (let branch of this.$route.query.branch) {
     const urls = branches.map((branch) => ({
       branchName: branch,
       mdURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${filename}`,
       cssURL: `https://raw.githubusercontent.com/${repoPath}/${branch}/${cssFilename}`,
     }))
 
-    let md, branch
+    let branch = 'main'
+    let md
     let css = null
     const results = await Promise.allSettled(urls.map((o) => fetch(o.mdURL)))
     let index = 0
@@ -67,23 +69,9 @@ export default {
 
     this.url = `https://github.com/${repoPath}/blob/${branch}/${filename}`
 
-    // Refactor out
-    const processMarkup = (htmlMarkup) => {
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(htmlMarkup, 'text/html')
-      doc.querySelectorAll('img').forEach((node) => {
-        let imgPath = node.attributes.src.value
-        if (!imgPath.startsWith('http') & !imgPath.startsWith('//')) {
-          const newUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${imgPath}`
-          node.src = newUrl
-        }
-      })
-      // dom parser adds html & body so we strip back out
-      return doc.body.innerHTML
-    }
-
     if (md) {
-      this.readme = processMarkup(this.$md.render(this.$sanitize(md)))
+      const html = await renderMarkdown(md)
+      this.readme = processMarkup(html, repoPath, branch)
       if (css) {
         // TODO need to id and pop previous one
         const style = document.createElement('style')
@@ -91,6 +79,8 @@ export default {
         document.head.append(style)
         console.log('Css Injected')
       }
+    } else {
+      this.readme = 'Target not found'
     }
     this.isLoading = false
   },

@@ -3,7 +3,7 @@
     <h1 class="font-serif"># markdown.is</h1>
 
     <div class="mt-10 pt-0">
-      <form class="flex flex-wrap gap-3 w-full" @submit.prevent="">
+      <form class="flex flex-wrap gap-3 w-full" @click="goToPath()">
         <label class="relative w-full flex flex-col">
           <span class="font-bold mb-3">Github Username</span>
           <input
@@ -80,33 +80,32 @@
             "
           />
         </label>
-      </form>
-
-      <div :class="{ 'mt-0 opacity-0 pointer-events-none': !username }">
-        <button
-          @click="goToPath()"
-          class="
-            mt-8
-            bg-black
-            hover:bg-gray-600
-            font-semibold
-            text-white
-            hover:text-white
-            py-2
-            px-4
-            border-none
-            rounded
-          "
-        >
-          Render
-        </button>
-        <div class="mt-6 bg-gray-50 py-4 px-4 overflow-scroll rounded flex">
-          <img src="@/assets/target.svg" class="inline h-6" />
-          <a :href="`https://${pagePath}`" class="inline">
-            <span class="ml-2 text-sm font-mono text-gray-600">{{ pagePath }}</span>
-          </a>
+        <div :class="{ 'mt-0 opacity-0 pointer-events-none': !username }">
+          <button
+            type="submit"
+            class="
+              mt-8
+              bg-black
+              hover:bg-gray-600
+              font-semibold
+              text-white
+              hover:text-white
+              py-2
+              px-4
+              border-none
+              rounded
+            "
+          >
+            Render
+          </button>
+          <div class="mt-6 bg-gray-50 py-4 px-4 overflow-scroll rounded flex">
+            <img src="@/assets/target.svg" class="inline h-6" />
+            <a :href="`https://${pagePath}`" class="inline">
+              <span class="ml-2 text-sm font-mono text-gray-600">{{ pagePath }}</span>
+            </a>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
 
     <div class="mt-10">
