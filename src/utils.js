@@ -4,12 +4,13 @@ import MarkdownItTasks from 'markdown-it-task-lists'
 import MarkdownItAnchor from 'markdown-it-anchor'
 
 export const renderMarkdownLocal = markdown => {
-    // DOMPurify.sanitize
-    const md = MarkdownIt()
+    const sanitizer = DOMPurify.sanitize
+    const md = MarkdownIt({ html: true, typographer: true })
+        .enable('image')
         .use(MarkdownItTasks)
     // .use(MarkdownItAnchor)
 
-    return md.render(markdown)
+    return sanitizer(md.render(markdown))
 }
 
 export const renderMarkdownRemote = async markdown => {
